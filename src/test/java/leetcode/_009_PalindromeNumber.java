@@ -8,7 +8,16 @@ public class _009_PalindromeNumber {
 
     @Test
     public void test_Solution() {
-        var s = new Solution();
+
+        Solution s = new CharSolution();
+
+        assertEquals(false, s.isPalindrome(1000021));
+        assertEquals(true, s.isPalindrome(121));
+        assertEquals(true, s.isPalindrome(0));
+        assertEquals(false, s.isPalindrome(-121));
+        assertEquals(false, s.isPalindrome(10));
+
+        s = new IntSolution();
 
         assertEquals(false, s.isPalindrome(1000021));
         assertEquals(true, s.isPalindrome(121));
@@ -19,23 +28,41 @@ public class _009_PalindromeNumber {
 
 }
 
-class Solution {
+interface Solution {
+    boolean isPalindrome(int x);
+}
+
+// hard 1 hour to solve
+class IntSolution implements Solution {
     public boolean isPalindrome(int x) {
-        int length = (int) (Math.log10(x) + 1);
-        if (x < 0)
+        if (x % 10 == 0 && x != 0)
             return false;
-        if (x < 10)
-            return true;
 
-        var rank = (int) Math.pow(10, length - 1);
-        var front = x / rank;
-        var back = (int) x % 10;
-        if (front != back) {
-            return false;
+        var pointer = 0;
+
+        // make reverse of x, but we need only half digits
+        while (pointer < x) {
+            pointer = pointer * 10 + x % 10;
+            x = x / 10;
         }
-        x = x - (int) front * rank;
-        x = x % 10;
 
-        return isPalindrome(x);
+        return pointer == x || pointer / 10 == x;
+    }
+}
+
+// easy 1 min to solve
+class CharSolution implements Solution {
+    public boolean isPalindrome(int x) {
+
+        var chars = String.valueOf(x).toCharArray();
+        var length = chars.length;
+
+        for (var i = 0; i < length / 2; i++) {
+            if (chars[i] != chars[length - 1]) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
