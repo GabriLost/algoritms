@@ -20,8 +20,46 @@ public class SubscribeAndDoFinallyTest {
         Thread.sleep(2000);
     }
 
+    @Test
+    public void FluxSequence() throws InterruptedException {
+
+        var startTime = System.currentTimeMillis();
+        Flux.range(0, 5)
+                .flatMap(this::longLivedFunction)
+                .flatMap(this::longLivedFunction)
+                .doOnNext(integer -> longLivedFunction(integer).subscribe())
+                .doFinally(type -> System.out.printf("Done %s  \n", System.currentTimeMillis() - startTime))
+                .blockLast();
+    }
+
+    @Test
+    public void FluxCombineSubFlatMap() {
+
+        var startTime = System.currentTimeMillis();
+        Flux.range(0, 5)
+                .flatMap(i -> longLivedFunction(i)
+                        .flatMap(j -> longLivedFunction(j)))
+                .doOnNext(i -> System.out.println("this is i " + i))
+                .doFinally(type -> System.out.printf("Done %s \n", System.currentTimeMillis() - startTime))
+                .blockLast();
+
+    }
+
+    @Test
+    public void FluxCombine() {
+
+        var startTime = System.currentTimeMillis();
+        Flux.range(0, 5)
+                .flatMap(i -> Flux.combineLatest(longLivedFunction(i), longLivedFunction(i), (integer, integer2) -> integer))
+                .doOnNext(i -> System.out.println("this is i " + i))
+                .doFinally(type -> System.out.printf("Done %s \n", System.currentTimeMillis() - startTime))
+                .blockLast();
+
+    }
+
 
     private Mono<Integer> longLivedFunction(Integer number) {
+        System.out.println("HI " + number);
         return Mono.just(number)
                 .doOnNext(integer -> System.out.println("longLivedFunction start " + integer))
                 .delayElement(Duration.ofSeconds(1))
