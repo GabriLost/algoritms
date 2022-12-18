@@ -6,7 +6,7 @@ import java.util.Stack;
 
 import static org.junit.Assert.assertEquals;
 
-public class _901_OnlineStockSpan {
+public class _0901_OnlineStockSpan {
 
     @Test
     public void test_901_OnlineStockSpan() {

@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class _009_PalindromeNumber {
+public class _0009_PalindromeNumber {
 
     @Test
     public void test_Solution() {
