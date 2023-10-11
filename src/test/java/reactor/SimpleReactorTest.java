@@ -39,8 +39,8 @@ public class SimpleReactorTest {
                 .create(error)
                 .expectNextCount(4)
                 .expectErrorMatches(throwable -> throwable instanceof IllegalArgumentException &&
-                        throwable.getMessage().equals("Our message")
-                ).verify();
+                        throwable.getMessage().equals("Our message"))
+                .verify();
 
 
     }
