@@ -31,15 +31,13 @@ public class WarmUpQuestions {
 
     @Test
     public void hashSetTest() {
-        Set<String> leaders = new HashSet<>(Arrays.asList("Сталин", "Ленин", "Че Гевара"));
-        System.out.println("Leaders = " + leaders);
+        Set<String> alphabet = new HashSet<>(Arrays.asList("A", "B", "C", "Hello there", "alphabet"));
+        System.out.println("alphabet = " + alphabet);
     }
-
 
     @Test
     public void intStreamTest() {
         var res = IntStream.iterate(1, x -> x + 1)
-                .peek(System.out::println)
                 .sorted()
                 .limit(5)
                 .findFirst();
@@ -55,6 +53,7 @@ public class WarmUpQuestions {
                 list.remove(x);
             }
         });
+        System.out.println(list);
     }
 
     @Test
@@ -65,5 +64,6 @@ public class WarmUpQuestions {
                 list.remove(x);
             }
         });
+        System.out.println(list);
     }
 }
