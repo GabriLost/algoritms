@@ -2,32 +2,12 @@ package interview;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.IntStream;
 
-public class WarmUpQuestions {
-
-    @Test
-    public void streamTest() {
-
-        var findFirst = IntStream
-                .range(1, 10000).boxed()
-                .findFirst();
-
-        var findAny = IntStream
-                .range(1, 10000).boxed()
-                .findAny();
-
-        System.out.println("findFirst result: " + findFirst.get());
-        System.out.println("findAny result  : " + findAny.get());
-
-    }
+public class CollectionsQuestions {
 
     @Test
     public void hashSetTest() {
@@ -35,15 +15,6 @@ public class WarmUpQuestions {
         System.out.println("alphabet = " + alphabet);
     }
 
-    @Test
-    public void intStreamTest() {
-        var res = IntStream.iterate(1, x -> x + 1)
-                .sorted()
-                .limit(5)
-                .findFirst();
-
-        System.out.println(res);
-    }
 
     @Test
     public void listRemove1() {
