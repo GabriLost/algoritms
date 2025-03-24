@@ -19,7 +19,7 @@ public class PublishOnSubscribeOnRunOn {
 //        Scheduler s = Schedulers.newSingle("s");
         Scheduler s = Schedulers.newParallel("p", 4);
 //        Scheduler s = Schedulers.newBoundedElastic(10, 100, "gay", 60, false);
-        var count = 4;
+        var count = 40;
 
         StepVerifier.create(Flux
                                 .range(1, count)

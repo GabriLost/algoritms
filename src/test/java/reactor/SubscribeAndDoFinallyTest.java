@@ -21,7 +21,7 @@ public class SubscribeAndDoFinallyTest {
     }
 
     @Test
-    public void FluxSequence() throws InterruptedException {
+    public void fluxSequence()  {
 
         var startTime = System.currentTimeMillis();
         Flux.range(0, 5)
@@ -33,7 +33,7 @@ public class SubscribeAndDoFinallyTest {
     }
 
     @Test
-    public void FluxCombineSubFlatMap() {
+    public void fluxCombineSubFlatMap() {
 
         var startTime = System.currentTimeMillis();
         Flux.range(0, 5)
@@ -46,7 +46,7 @@ public class SubscribeAndDoFinallyTest {
     }
 
     @Test
-    public void FluxCombine() {
+    public void fluxCombine() {
 
         var startTime = System.currentTimeMillis();
         Flux.range(0, 5)

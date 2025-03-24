@@ -3,6 +3,8 @@ package leetcode;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class _0009_PalindromeNumber {
 
@@ -11,19 +13,19 @@ public class _0009_PalindromeNumber {
 
         Solution s = new CharSolution();
 
-        assertEquals(false, s.isPalindrome(1000021));
-        assertEquals(true, s.isPalindrome(121));
-        assertEquals(true, s.isPalindrome(0));
-        assertEquals(false, s.isPalindrome(-121));
-        assertEquals(false, s.isPalindrome(10));
+        assertFalse(s.isPalindrome(1000021));
+        assertTrue(s.isPalindrome(121));
+        assertTrue(s.isPalindrome(0));
+        assertFalse(s.isPalindrome(-121));
+        assertFalse(s.isPalindrome(10));
 
         s = new IntSolution();
 
-        assertEquals(false, s.isPalindrome(1000021));
-        assertEquals(true, s.isPalindrome(121));
-        assertEquals(true, s.isPalindrome(0));
-        assertEquals(false, s.isPalindrome(-121));
-        assertEquals(false, s.isPalindrome(10));
+        assertFalse(s.isPalindrome(1000021));
+        assertTrue(s.isPalindrome(121));
+        assertTrue(s.isPalindrome(0));
+        assertFalse(s.isPalindrome(-121));
+        assertFalse(s.isPalindrome(10));
     }
 
 }

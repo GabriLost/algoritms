@@ -18,7 +18,8 @@ public class FluentTimingTest {
     public void long_fluent_to_times_slower_then_short_fluent() {
         var res = IntStream.range(0, 1_000).boxed()// с 1, 10, 1000, 10_000 одинаковый результат
                 .map(i -> Tuples.of(long_fluent_timing(), short_fluent_timing()))
-                .mapToDouble(value -> (double) value.getT1() / value.getT2())
+                .mapToDouble(value -> (double) value.getT1() / (double) value.getT2())
+                .filter(value -> value != Double.POSITIVE_INFINITY)
                 .average()
                 .orElse(Double.NaN);
 

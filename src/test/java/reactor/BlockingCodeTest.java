@@ -24,15 +24,16 @@ public class BlockingCodeTest {
 
     @Test
     public void testBlockingCode() {
-        System.out.printf("processors %s\n", Runtime.getRuntime().availableProcessors());
+        log.info("processors {}", Runtime.getRuntime().availableProcessors());
         var startTime = System.currentTimeMillis();
-// спойлер
+
 //        Flux.range(0, Runtime.getRuntime().availableProcessors() )
-        Flux.range(0, 1000)
-                .subscribeOn(Schedulers.parallel())
+        Flux.range(1, 1000)
+//                .subscribeOn(Schedulers.parallel())
+                .subscribeOn(Schedulers.newParallel("parallel-scheduler", Runtime.getRuntime().availableProcessors()))
                 .map(i -> {
                     var latch = new CountDownLatch(1);//защелка
-                    System.out.printf("%s\n", i);
+                    log.info("processing {}", i);
 
                     Mono.delay(Duration.ofMillis(100))
                             .subscribe(___ -> latch.countDown());
@@ -41,10 +42,10 @@ public class BlockingCodeTest {
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
-
+                    log.info("end {}", i);
                     return i;
                 })
-                .doFinally(signalType -> System.out.printf("Done %s \n", System.currentTimeMillis() - startTime))
+                .doFinally(signalType -> log.info("Done {}", System.currentTimeMillis() - startTime))
                 .blockLast();
 
 
@@ -57,7 +58,7 @@ public class BlockingCodeTest {
                         Flux.range(0, count)
                                 .groupBy(Function.identity())
                                 .flatMap(Function.identity())
-                                .doOnNext(i -> log.info("i: " + i))
+                                .doOnNext(i -> log.info("i: {}", i))
                                 .filter(i -> i == count))
                 .verifyComplete();
     }

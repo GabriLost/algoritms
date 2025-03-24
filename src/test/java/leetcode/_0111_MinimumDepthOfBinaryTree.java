@@ -22,7 +22,7 @@ public class _0111_MinimumDepthOfBinaryTree {
 
     }
 
-    class Solution {
+    static class Solution {
         public int minDepth(TreeNode root) {
             if (root == null) {
                 return 0;

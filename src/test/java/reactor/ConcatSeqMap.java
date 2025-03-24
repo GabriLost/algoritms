@@ -1,13 +1,16 @@
 package reactor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 import java.time.Duration;
 import java.util.stream.IntStream;
 
 
+@Slf4j
 public class ConcatSeqMap {
 
     @Test
@@ -26,8 +29,9 @@ public class ConcatSeqMap {
     public void test_flatMap() {
         var startTime = System.currentTimeMillis();
         Flux.range(0, 10)
+                .publishOn(Schedulers.boundedElastic())
                 .flatMap(this::doSomethingAsync)
-                .doOnNext(n -> System.out.printf("Done %s %s \n", n, System.currentTimeMillis() - startTime))
+                .doOnNext(n -> log.info("Done {} {}", n, System.currentTimeMillis() - startTime))
                 .blockLast();
     }
 
@@ -48,7 +52,7 @@ public class ConcatSeqMap {
         var startTime = System.currentTimeMillis();
         Flux.range(0, 10)
                 .flatMapSequential(this::doSomethingAsync)
-                .doOnNext(n -> System.out.printf("Done %s %s \n", n, System.currentTimeMillis() - startTime))
+                .doOnNext(n -> log.info("Done Sequential {} {}", n, System.currentTimeMillis() - startTime))
                 .blockLast();
     }
 
@@ -70,7 +74,7 @@ public class ConcatSeqMap {
         var startTime = System.currentTimeMillis();
         Flux.range(0, 10)
                 .concatMap(this::doSomethingAsync)
-                .doOnNext(n -> System.out.printf("Done %s %s \n", n, System.currentTimeMillis() - startTime))
+                .doOnNext(n -> log.info("Done concatMap {} {}", n, System.currentTimeMillis() - startTime))
                 .blockLast();
     }
 
@@ -84,7 +88,7 @@ public class ConcatSeqMap {
     @Test
     public void testOddOrEven() {
         IntStream.range(1, 10)
-                .forEach(value -> System.out.printf("number %o is %s\n", value, (value & 1) == 1 ? "odd" : "even"));
+                .forEach(value -> log.info("number {} is {}", value, (value & 1) == 1 ? "odd" : "even"));
     }
 
 }
