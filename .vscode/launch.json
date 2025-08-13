@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CountDownLatchDemo",
+            "request": "launch",
+            "mainClass": "interview.CountDownLatchDemo",
+            "projectName": "algoritms"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"

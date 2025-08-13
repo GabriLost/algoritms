@@ -11,17 +11,11 @@ public class StreamQuestions {
     @Test
     public void findFirstFindAnyDifference() {
 
-        var findFirst = IntStream
-                .range(1, 100).boxed()
-                .findFirst();
+        var findFirst = IntStream.range(1, 100).boxed().findFirst();
+        var findAny__ = IntStream.range(1, 100).boxed().findAny();
 
-        var findAny = IntStream
-                .range(1, 100).boxed()
-                .parallel()
-                .findFirst();
-
-        System.out.println("findFirst result: " + findFirst.get());
-        System.out.println("findAny result  : " + findAny.get());
+        System.out.println("findFirst: " + findFirst);
+        System.out.println("findAny  : " + findAny__);
 
     }
 
@@ -38,7 +32,7 @@ public class StreamQuestions {
     @Test
     public void sortedStreamTest() {
         var res = IntStream.iterate(1, x -> x + 1)
-//                .sorted()
+                .sorted()
                 .limit(5)
                 .max();
 
@@ -72,13 +66,13 @@ public class StreamQuestions {
     public void parallelStreamWithSpecifiedPool() {
         var numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 
-        ForkJoinPool customThreadPool = new ForkJoinPool(4);
+        try (ForkJoinPool customThreadPool = new ForkJoinPool(4)) {
+            customThreadPool.submit(() -> numbers.parallelStream()
+                    .filter(n -> n % 2 == 0)
+                    .map(n -> n * n)
+                    .forEach(System.out::println)).join();
 
-        customThreadPool.submit(() -> numbers.parallelStream()
-                .filter(n -> n % 2 == 0)
-                .map(n -> n * n)
-                .forEach(System.out::println)).join();
-
-        customThreadPool.shutdown();
+            customThreadPool.shutdown();
+        }
     }
 }
