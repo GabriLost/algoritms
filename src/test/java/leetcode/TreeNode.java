@@ -61,7 +61,7 @@ public class TreeNode {
         StringBuilder sb = new StringBuilder();
         var queue = new LinkedList<TreeNode>();
         queue.offer(this);
-        var depth = 1;
+        Integer depth = 1;
         var empties = 0;
         while (!queue.isEmpty()) {
             int levelSize = queue.size();

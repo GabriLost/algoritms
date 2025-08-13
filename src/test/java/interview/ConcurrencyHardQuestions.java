@@ -26,22 +26,23 @@ public class ConcurrencyHardQuestions {
         AtomicIntegerExample atomicIntegerExample = new AtomicIntegerExample();
         ReadWriteLockExample readWriteLockExample = new ReadWriteLockExample();
 
-        ForkJoinPool customThreadPool = new ForkJoinPool(4);
-        System.out.println("lock =" + lockExample.getCount());
-        for (int i = 0; i < 10; i++) {
-            customThreadPool.submit(() -> {
-                lockExample.increment();
-                System.out.println("lock =" + lockExample.getCount());
-                synchronizedExample.increment();
-                System.out.println("synchronized =" + synchronizedExample.getCount());
-                atomicIntegerExample.increment();
-                System.out.println("atomic =" + atomicIntegerExample.getCount());
-                readWriteLockExample.increment();
-                System.out.println("readWrite =" + readWriteLockExample.getCount());
-            });
-        }
+        try (ForkJoinPool customThreadPool = new ForkJoinPool(4)) {
+            System.out.println("lock =" + lockExample.getCount());
+            for (int i = 0; i < 10; i++) {
+                customThreadPool.submit(() -> {
+                    lockExample.increment();
+                    System.out.println("lock =" + lockExample.getCount());
+                    synchronizedExample.increment();
+                    System.out.println("synchronized =" + synchronizedExample.getCount());
+                    atomicIntegerExample.increment();
+                    System.out.println("atomic =" + atomicIntegerExample.getCount());
+                    readWriteLockExample.increment();
+                    System.out.println("readWrite =" + readWriteLockExample.getCount());
+                });
+            }
 
-        customThreadPool.shutdown();
+            customThreadPool.shutdown();
+        }
     }
 
     @RepeatedTest(100)
