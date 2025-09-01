@@ -1,6 +1,7 @@
 package interview;
 
 import org.junit.Test;
+import org.springframework.util.StopWatch;
 
 import java.util.Arrays;
 import java.util.concurrent.ForkJoinPool;
@@ -16,6 +17,31 @@ public class StreamQuestions {
 
         System.out.println("findFirst: " + findFirst);
         System.out.println("findAny  : " + findAny__);
+
+    }
+
+    @Test
+    public void speedTest() {
+        var s = new StopWatch();
+
+        s.start("single");
+        var res1 = IntStream.range(1, 100_000_000).sum();
+        s.stop();
+
+        s.start("parallel");
+        var res2 =  IntStream.range(1, 100_000_000).parallel().sum();
+        s.stop();
+
+        s.start("imperative");
+        int sum = 0;
+        for (int i = 1; i <= 100_000_000; i++) {
+            sum += i;
+        } 
+        var res3 = sum;
+        s.stop();
+
+        System.out.printf("1_%s\n3_%s\n3_%s\n", res1, res2, res3);
+        System.out.println(s.prettyPrint());
 
     }
 

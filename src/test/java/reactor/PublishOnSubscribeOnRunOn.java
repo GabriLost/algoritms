@@ -203,10 +203,10 @@ public class PublishOnSubscribeOnRunOn {
         return o1.getClass() == o2.getClass();
     }
 
-    @Test
-    public void test24() {
-        Instant.class;
-    }
+//    @Test
+//    public void test24() {
+//        Instant.class;
+//    }
 
 
 }
